@@ -10,15 +10,14 @@ namespace ProjectHierarchization
             string solutionFilePath = args[0];
 
             string[] solutionFileLines = File.ReadAllLines(solutionFilePath);
-            string solutionFileText = File.ReadAllText(solutionFilePath);
 
-            Regex regularExpression = new Regex("Project\\(\"\\{(.*)\\}\"\\)");
+            Regex regularExpression = new Regex("Project\\(\"\\{(?<guid>.*)\\}\"\\)");
 
             foreach (var line in solutionFileLines) {
                 Match match = regularExpression.Match(line);
                 if(match.Success) {
                     Console.WriteLine("PROJECT");
-                    Console.WriteLine(match.Groups[0].Value);
+                    Console.WriteLine(match.Groups["guid"].Value);
                 }
             }
         }
