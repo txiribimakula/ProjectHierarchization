@@ -9,6 +9,8 @@ namespace ProjectHierarchization
         static void Main(string[] args) {
             string solutionFilePath = args[0];
 
+            string solutionFolderPath = Path.GetDirectoryName(solutionFilePath);
+
             string[] solutionFileLines = File.ReadAllLines(solutionFilePath);
 
             Regex projectInfoRegEx = new Regex("Project\\(\"\\{.*\\}\"\\) = \"(?<name>.*)\", \"(?<path>.*)\", \".*\\}\"");
@@ -16,9 +18,10 @@ namespace ProjectHierarchization
             foreach (var line in solutionFileLines) {
                 Match projectMatch = projectInfoRegEx.Match(line);
                 if(projectMatch.Success) {
-                    Console.WriteLine("PROJECT");
-                    Console.WriteLine(projectMatch.Groups["name"].Value);
-                    Console.WriteLine(projectMatch.Groups["path"].Value);
+                    string projectName = projectMatch.Groups["name"].Value;
+                    string projectPath = projectMatch.Groups["path"].Value;
+                    string projectFullPath = solutionFolderPath + "\\" + projectPath;
+                    Console.WriteLine(projectFullPath);
                 }
             }
         }
