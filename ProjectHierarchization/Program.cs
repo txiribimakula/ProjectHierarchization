@@ -11,13 +11,14 @@ namespace ProjectHierarchization
 
             string[] solutionFileLines = File.ReadAllLines(solutionFilePath);
 
-            Regex regularExpression = new Regex("Project\\(\"\\{(?<guid>.*)\\}\"\\)");
+            Regex regularExpression = new Regex("Project\\(\"\\{.*\\}\"\\) = \"(?<name>.*)\", \"(?<path>.*)\", \".*\\}\"");
 
             foreach (var line in solutionFileLines) {
                 Match match = regularExpression.Match(line);
                 if(match.Success) {
                     Console.WriteLine("PROJECT");
-                    Console.WriteLine(match.Groups["guid"].Value);
+                    Console.WriteLine(match.Groups["name"].Value);
+                    Console.WriteLine(match.Groups["path"].Value);
                 }
             }
         }
