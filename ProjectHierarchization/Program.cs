@@ -24,10 +24,12 @@ namespace ProjectHierarchization
             foreach (var line in solutionFileLines) {
                 Match projectMatch = projectInfoRegEx.Match(line);
                 if(projectMatch.Success) {
-                    string projectName = projectMatch.Groups["name"].Value;
-                    string projectPath = projectMatch.Groups["path"].Value;
-                    string projectFullPath = solutionFolderPath + "\\" + projectPath;
-                    Console.WriteLine(projectFullPath);
+                    Project project = new Project();
+                    project.Id = projectMatch.Groups["name"].Value;
+                    project.Name = project.Id;
+                    project.Dependencies = new List<string>();
+                    
+                    string projectFullPath = solutionFolderPath + "\\" + projectMatch.Groups["path"].Value;
                 }
             }
         }
