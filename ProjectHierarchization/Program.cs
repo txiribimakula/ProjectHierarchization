@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectHierarchization.Models;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -8,6 +9,8 @@ namespace ProjectHierarchization
     {
         static void Main(string[] args) {
             string solutionFilePath = args[0];
+
+            Solution solution = new Solution();
 
             string solutionFolderPath = Path.GetDirectoryName(solutionFilePath);
 
