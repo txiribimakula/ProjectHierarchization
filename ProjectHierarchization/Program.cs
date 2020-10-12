@@ -1,5 +1,6 @@
 ﻿using ProjectHierarchization.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -11,9 +12,11 @@ namespace ProjectHierarchization
             string solutionFilePath = args[0];
 
             Solution solution = new Solution();
+            solution.Id = Path.GetFileName(solutionFilePath);
+            solution.Name = Path.GetFileNameWithoutExtension(solutionFilePath);
+            solution.Projects = new List<Project>();
 
             string solutionFolderPath = Path.GetDirectoryName(solutionFilePath);
-
             string[] solutionFileLines = File.ReadAllLines(solutionFilePath);
 
             Regex projectInfoRegEx = new Regex("Project\\(\"\\{.*\\}\"\\) = \"(?<name>.*)\", \"(?<path>.*)\", \".*\\}\"");
