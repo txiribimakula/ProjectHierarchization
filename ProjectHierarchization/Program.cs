@@ -15,9 +15,10 @@ namespace ProjectHierarchization
             Regex regularExpression = new Regex("Project\\(\"\\{(.*)\\}\"\\)");
 
             foreach (var line in solutionFileLines) {
-                if(regularExpression.Match(line).Success) {
+                Match match = regularExpression.Match(line);
+                if(match.Success) {
                     Console.WriteLine("PROJECT");
-                    Console.WriteLine(line);
+                    Console.WriteLine(match.Groups[0].Value);
                 }
             }
         }
