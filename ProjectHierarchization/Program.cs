@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ProjectHierarchization
 {
@@ -9,9 +10,15 @@ namespace ProjectHierarchization
             string solutionFilePath = args[0];
 
             string[] solutionFileLines = File.ReadAllLines(solutionFilePath);
+            string solutionFileText = File.ReadAllText(solutionFilePath);
+
+            Regex regularExpression = new Regex("Project\\(\"\\{(.*)\\}\"\\)");
 
             foreach (var line in solutionFileLines) {
-                Console.WriteLine(line);
+                if(regularExpression.Match(line).Success) {
+                    Console.WriteLine("PROJECT");
+                    Console.WriteLine(line);
+                }
             }
         }
     }
