@@ -11,10 +11,7 @@ namespace ProjectHierarchization
         static void Main(string[] args) {
             string solutionFilePath = args[0];
 
-            Solution solution = new Solution();
-            solution.Id = Path.GetFileName(solutionFilePath);
-            solution.Name = Path.GetFileNameWithoutExtension(solutionFilePath);
-            solution.Projects = new List<Project>();
+            Solution solution = new Solution(Path.GetFileName(solutionFilePath), Path.GetFileNameWithoutExtension(solutionFilePath));
 
             string solutionFolderPath = Path.GetDirectoryName(solutionFilePath);
             string[] solutionFileLines = File.ReadAllLines(solutionFilePath);
@@ -24,10 +21,7 @@ namespace ProjectHierarchization
             foreach (var line in solutionFileLines) {
                 Match projectMatch = projectInfoRegEx.Match(line);
                 if(projectMatch.Success) {
-                    Project project = new Project();
-                    project.Id = projectMatch.Groups["name"].Value;
-                    project.Name = project.Id;
-                    project.Dependencies = new List<string>();
+                    Project project = new Project(projectMatch.Groups["name"].Value, projectMatch.Groups["name"].Value);
                     
                     string projectFullPath = solutionFolderPath + "\\" + projectMatch.Groups["path"].Value;
                 }
